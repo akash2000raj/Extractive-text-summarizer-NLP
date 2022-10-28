@@ -26,6 +26,7 @@ def weight_cal(filtered_term,s):
         wt_each_term = document_word_token.count(W) / n
         weights_of_sentences.append(wt_each_term)
         wt_sent=wt_sent+wt_each_term
+    wt_sent = wt_sent/ns;
     print(" %.2f"%wt_sent)
     final_summary[s]=float("%.2f"%wt_sent)
 
@@ -47,7 +48,7 @@ def weight_assign(sentence):
 
 
 # print(nlp.vocab[""].is_stop)
-file = open('doc1.txt', 'r')
+file = open('twitternews.txt', 'r')
 textual_data = file.read()
 
 doc = nlp(textual_data)
@@ -71,7 +72,7 @@ print(converted_dict.values())
 
 #getting first N element from dictionary
 
-N=4
+N=7 # number of sentences user want to fetch
 
 out =dict(itertools.islice(converted_dict.items(),N))
 out2 =list(out)
@@ -88,6 +89,8 @@ bold = "\033[1m"
 italics = '\033[3m'
 underline = '\033[4m'
 end = "\033[0m"
+
+print(len(extra_list))
 print(red+bold+underline+"ORGINAL ARTICLE \n"+end)
 
 orginal_sent=""
