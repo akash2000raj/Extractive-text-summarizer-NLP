@@ -18,7 +18,7 @@
 ```
 
 -  open cloned folder in pycharm....    
--  run  assignRank.py file 
+-  run  summarizer.py file 
 
 
 ## About Project
