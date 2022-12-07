@@ -12,9 +12,9 @@ document_word_token = []
 weights_of_sentences = []
 punc = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
 
-
 def weight_cal(filtered_term,s):
     # find unique element--
+
     unique_element = []
     wt_sent = 0
     n = len(document_word_token)
@@ -26,7 +26,7 @@ def weight_cal(filtered_term,s):
         wt_each_term = document_word_token.count(W) / n
         weights_of_sentences.append(wt_each_term)
         wt_sent=wt_sent+wt_each_term
-    wt_sent = wt_sent/ns;
+    wt_sent = wt_sent/ns
     print(" %.2f"%wt_sent)
     final_summary[s]=float("%.2f"%wt_sent)
 
@@ -43,8 +43,8 @@ def weight_assign(sentence):
             document_word_token.append(each_text.text)
 
     weight_cal(filtered_term,s)
-    print(token)
-    print(filtered_term)
+    # print(token)
+    # print(filtered_term)
 
 
 # print(nlp.vocab[""].is_stop)
@@ -72,7 +72,10 @@ print(converted_dict.values())
 
 #getting first N element from dictionary
 
-N=7 # number of sentences user want to fetch
+
+
+N=2 # number of sentences user want to fetch
+
 
 out =dict(itertools.islice(converted_dict.items(),N))
 out2 =list(out)
