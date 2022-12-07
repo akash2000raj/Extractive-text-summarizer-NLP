@@ -3,10 +3,13 @@ import math
 import itertools
 from spacy.lang.en.stop_words import STOP_WORDS
 import re
+import numpy as np
+from collections import OrderedDict
 
 nlp = spacy.load(
     r"C:\Users\AKASH  RAJ\AppData\Local\Programs\Python\Python310\Lib\site-packages\en_core_web_sm\en_core_web_sm-3.4.0")
-final_summary={}
+ranksofsentences={}
+finalSummary=''
 extra_list = []
 document_word_token = []
 filtered_token=[]#without stop words
@@ -66,7 +69,7 @@ def AssignWeightToTerm(filtered_tokens):
         TermWeight.append("%.4f"%weight)
 
 #
-count=0
+
 def AssignWeightToSentence(extra_List):
 
     for sentence in extra_List:
@@ -81,6 +84,13 @@ def AssignWeightToSentence(extra_List):
                  wt=TermWeight[index]
                  each_sents_wt = each_sents_wt + float(wt)
         weights_of_sentences.append(each_sents_wt)
+        ranksofsentences[sentence] =each_sents_wt
+
+def AssignRakToSentence(unsorted_dict):
+    value_key_pair =((value,key) for (key,value) in unsorted_dict.items())
+    sorted_key_value_pairs =sorted(value_key_pair,reverse=True)
+    return sorted_key_value_pairs
+
 
 
 
@@ -116,3 +126,48 @@ print(TermWeight)
 print(len(weights_of_sentences))
 
 print(weights_of_sentences)
+
+print(ranksofsentences)
+
+sorted_dict =AssignRakToSentence(ranksofsentences) #sorted dictionary
+print(sorted_dict)
+print('****************************************************')
+
+# percentage  = int(input('Enter how much (%) of content you want (range 1 - 100)'))
+
+
+
+# print(number_of_lines)
+
+
+
+
+
+
+
+
+red = '\033[91m'
+green = '\033[92m'
+blue = '\033[94m'
+bold = "\033[1m"
+italics = '\033[3m'
+underline = '\033[4m'
+end = "\033[0m"
+
+print(len(extra_list))
+print(red+bold+underline+"ORGINAL ARTICLE \n"+end)
+
+orginal_sent=""
+for i in range(len(extra_list)):
+    orginal_sent=orginal_sent+extra_list[i]+"."+"\n"
+
+print(orginal_sent)
+
+
+print(green+bold+underline+"OUTPUT\n"+end)
+print(green+bold+underline+"SUMMARIZATION USING TERM WEIGHT APPROACH\n"+end)
+number_of_lines = math.floor((len(weights_of_sentences)*50)/100)
+print(number_of_lines)
+for x in range(0,number_of_lines):
+         finalSummary=finalSummary+ sorted_dict[x][1]
+print(finalSummary)
