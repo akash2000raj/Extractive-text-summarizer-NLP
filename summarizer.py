@@ -26,6 +26,8 @@ arr=[]
 
 def DocumentPreProcessing():
     file = open('twitternews.txt', 'r')
+    #file = open('doc1.txt', 'r')
+
     textual_data = file.read()
 
     doc = nlp(textual_data)
@@ -74,17 +76,21 @@ def AssignWeightToSentence(extra_List):
 
     for sentence in extra_List:
         each_sents_wt=0;
+        number_of_terms=0
         token_of_each_sents=sentence.split()
         for word in token_of_each_sents:
+
             if(filtered_token.count(word.lower())==0):
                 wt=0
                 each_sents_wt = each_sents_wt + int(wt)
             else:
                  index = filtered_token.index(word.lower())
                  wt=TermWeight[index]
+                 number_of_terms = number_of_terms + 1
                  each_sents_wt = each_sents_wt + float(wt)
-        weights_of_sentences.append(each_sents_wt)
-        ranksofsentences[sentence] =each_sents_wt
+
+        weights_of_sentences.append(each_sents_wt/number_of_terms)
+        ranksofsentences[sentence] =each_sents_wt/number_of_terms    # dictionary
 
 def AssignRakToSentence(unsorted_dict):
     value_key_pair =((value,key) for (key,value) in unsorted_dict.items())
@@ -166,8 +172,9 @@ print(orginal_sent)
 
 print(green+bold+underline+"OUTPUT\n"+end)
 print(green+bold+underline+"SUMMARIZATION USING TERM WEIGHT APPROACH\n"+end)
-number_of_lines = math.floor((len(weights_of_sentences)*50)/100)
+number_of_lines = math.ceil((len(weights_of_sentences)*50)/100)
 print(number_of_lines)
 for x in range(0,number_of_lines):
-         finalSummary=finalSummary+ sorted_dict[x][1]
+         finalSummary=finalSummary+ sorted_dict[x][1]+'\n'
+
 print(finalSummary)
