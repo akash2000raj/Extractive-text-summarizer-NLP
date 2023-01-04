@@ -48,7 +48,7 @@ def weight_assign(sentence):
 
 
 # print(nlp.vocab[""].is_stop)
-file = open('twitternews.txt', 'r')
+file = open('dataset/twitternews.txt', 'r')
 textual_data = file.read()
 
 doc = nlp(textual_data)

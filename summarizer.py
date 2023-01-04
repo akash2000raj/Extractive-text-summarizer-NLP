@@ -1,11 +1,17 @@
 import spacy
 import math
+import docx
+
+
+
+
+
 import itertools
 from spacy.lang.en.stop_words import STOP_WORDS
 import re
 import numpy as np
 from collections import OrderedDict
-
+totalword=0
 nlp = spacy.load(
     r"C:\Users\AKASH  RAJ\AppData\Local\Programs\Python\Python310\Lib\site-packages\en_core_web_sm\en_core_web_sm-3.4.0")
 ranksofsentences={}
@@ -25,8 +31,9 @@ arr=[]
 # find the total tokens in the document
 
 def DocumentPreProcessing():
-    file = open('twitternews.txt', 'r')
-    #file = open('doc1.txt', 'r')
+    #file = open('dataset/twitternews.txt', 'r')
+    #file  =open('dataset/russia_ukrain_war.txt','r')
+    file = open('dataset/doc1.txt', 'r')
 
     textual_data = file.read()
 
@@ -86,11 +93,13 @@ def AssignWeightToSentence(extra_List):
             else:
                  index = filtered_token.index(word.lower())
                  wt=TermWeight[index]
-                 number_of_terms = number_of_terms + 1
-                 each_sents_wt = each_sents_wt + float(wt)
+            global totalword
+            totalword =totalword+1
+            number_of_terms = number_of_terms + 1
+            each_sents_wt = each_sents_wt + float(wt)
 
         weights_of_sentences.append(each_sents_wt/number_of_terms)
-        ranksofsentences[sentence] =each_sents_wt/number_of_terms    # dictionary
+        ranksofsentences[sentence] =each_sents_wt/number_of_terms  # dictionary
 
 def AssignRakToSentence(unsorted_dict):
     value_key_pair =((value,key) for (key,value) in unsorted_dict.items())
@@ -175,6 +184,20 @@ print(green+bold+underline+"SUMMARIZATION USING TERM WEIGHT APPROACH\n"+end)
 number_of_lines = math.ceil((len(weights_of_sentences)*50)/100)
 print(number_of_lines)
 for x in range(0,number_of_lines):
-         finalSummary=finalSummary+ sorted_dict[x][1]+'\n'
+         finalSummary=finalSummary+sorted_dict[x][1]+'\n'
 
 print(finalSummary)
+
+log = open("logs.txt",'a')
+log.write("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-----------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxx--------xxxxxxxxxxxxxxxxxx\n")
+for i in range(0,len(sorted_dict)):
+    log.write(str(sorted_dict[i])+'\n')
+
+log.write("===================================ORGINAL DOCUMENT(INPUT)=====================================\n")
+log.write(orginal_sent)
+log.write("===================================SUMMARIZED DOCUMENT(OUTPUT)=====================================\n")
+log.write(finalSummary)
+log.write("total words in orginal article : "+str(totalword)+'\n')
+log.write("total words in summarized article : "+str(len(finalSummary.split()))+'\n')
+
+log.write("========================================================================================================\n")
