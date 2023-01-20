@@ -2,7 +2,7 @@
 # DESIGN OF TEXT SUMMARIZATION MODEL(NLP)
 
 
-## Authors
+## Author
 
 - [Akash Kumar Raj](https://www.github.com/akash2000raj)
 
