@@ -5,8 +5,7 @@
 ## Authors
 
 - [Akash Kumar Raj](https://www.github.com/akash2000raj)
-- [Utkarsh Ankur](https://www.github.com/utkarsh51-51)
-- [Sandeep Kumar Tigga](https://github.com/Sandeep11122001)
+
 
 ## Installation
 
